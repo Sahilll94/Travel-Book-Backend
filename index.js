@@ -3165,6 +3165,28 @@ app.post("/chat", handleChatRequest);
  */
 app.get("/chat-status", getChatbotStatus);
 
+/**
+ * GET /total-stories
+ * Get the total count of travel stories in the database
+ * Public endpoint - no authentication required
+ */
+app.get("/total-stories", async (req, res) => {
+    try {
+        const totalStories = await TravelStory.countDocuments();
+        return res.status(200).json({
+            error: false,
+            totalStories: totalStories
+        });
+    } catch (error) {
+        console.error("Error fetching total stories count:", error);
+        return res.status(500).json({
+            error: true,
+            message: "Failed to fetch total stories count",
+            totalStories: 0
+        });
+    }
+});
+
 // Add a health check endpoint that Render can use to verify the app is running
 app.get("/health", (req, res) => {
     res.status(200).send("OK");
