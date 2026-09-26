@@ -1,4 +1,6 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
+const fs = require('fs');
+const path = require('path');
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -7,7 +9,77 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
  * This provides the AI with information about Travel Book
  */
 
-const KNOWLEDGE_BASE = `
+/**
+ * Load knowledge base from external JSON for easy updates.
+ * Falls back to the embedded KB if file is missing or invalid.
+ */
+function loadKnowledgeBaseFromJson() {
+    try {
+        const kbPath = process.env.CHATBOT_KB_PATH || path.join(__dirname, '..', 'data', 'chatbot_knowledge_base.json');
+        const raw = fs.readFileSync(kbPath, 'utf-8');
+        const kb = JSON.parse(raw);
+
+        // Build a consolidated prompt from structured JSON
+        const sections = [];
+        sections.push('You are a helpful assistant for Travel Book, a digital travel journal application.');
+
+        // Project section
+        if (kb.project) {
+            sections.push('\n## Project Overview');
+            if (kb.project.overview) sections.push(kb.project.overview);
+            if (Array.isArray(kb.project.features)) {
+                sections.push('\n### Key Features:');
+                kb.project.features.forEach((f, i) => sections.push(`${i + 1}. ${f}`));
+            }
+            if (kb.project.structure && Array.isArray(kb.project.structure.backend)) {
+                sections.push('\n### Backend Structure:');
+                kb.project.structure.backend.forEach(item => sections.push(`- ${item}`));
+            }
+            if (Array.isArray(kb.project.usage)) {
+                sections.push('\n### Usage:');
+                kb.project.usage.forEach(item => sections.push(`- ${item}`));
+            }
+        }
+
+        // Open Source section
+        if (kb.open_source) {
+            sections.push('\n## Open Source Contributions');
+            if (kb.open_source.overview) sections.push(kb.open_source.overview);
+            if (Array.isArray(kb.open_source.faqs)) {
+                sections.push('\n### Contribution FAQs:');
+                kb.open_source.faqs.forEach(faq => sections.push(`- Q: ${faq.q}\n  A: ${faq.a}`));
+            }
+        }
+
+        // Developer section
+        if (kb.developer) {
+            sections.push('\n## Developer Q&A');
+            if (kb.developer.overview) sections.push(kb.developer.overview);
+            if (Array.isArray(kb.developer.faqs)) {
+                kb.developer.faqs.forEach(faq => sections.push(`- Q: ${faq.q}\n  A: ${faq.a}`));
+            }
+        }
+
+        // Guidelines
+        if (kb.guidelines) {
+            sections.push('\n## Supported Queries & Guidelines');
+            if (Array.isArray(kb.guidelines.supported_queries)) {
+                sections.push('Supported topics:');
+                kb.guidelines.supported_queries.forEach(item => sections.push(`- ${item}`));
+            }
+            if (kb.guidelines.update_instructions) {
+                sections.push(`\nUpdate instructions: ${kb.guidelines.update_instructions}`);
+            }
+        }
+
+        return sections.join('\n');
+    } catch (e) {
+        // Fallback to embedded KB if JSON load fails
+        return null;
+    }
+}
+
+const EMBEDDED_KB = `
 You are a helpful assistant for Travel Book, a digital travel journal application.
 
 ## About Travel Book
@@ -170,6 +242,8 @@ Yes, Travel Book is completely free to use!
 
 Please be helpful, friendly, and informative in all responses.
 `;
+
+const KNOWLEDGE_BASE = loadKnowledgeBaseFromJson() || EMBEDDED_KB;
 
 /**
  * Generate a response using Gemini API

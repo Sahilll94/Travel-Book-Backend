@@ -1,0 +1,83 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "updated": "2026-01-24",
+    "source": "Travel-Book-Backend/services/chatbot.service.js"
+  },
+  "open_source": {
+    "overview": "Guidance for contributing to Travel-Book, including forking, branching, committing, and raising PRs aligned with repository guidelines.",
+    "faqs": [
+      {
+        "q": "How do I start contributing?",
+        "a": "Fork the backend repository (https://github.com/Sahilll94/Travel-Book-Backend), clone your fork, create a feature branch (e.g., feat/chatbot-kb), make changes, test locally, push to your fork, and open a PR to the upstream repository. Follow CONTRIBUTING.md and CODE_OF_CONDUCT.md."
+      },
+      {
+        "q": "What branch workflow should I use?",
+        "a": "Use short-lived feature branches named by scope (feat/..., fix/..., docs/...). Keep commits atomic with clear messages. Rebase or merge from upstream main before opening the PR to resolve conflicts."
+      },
+      {
+        "q": "How do I link issues in my PR?",
+        "a": "Reference the issue number in your PR description using keywords like 'Fixes #94' or 'Closes #94' so GitHub auto-links and closes on merge."
+      },
+      {
+        "q": "Where are contribution guidelines?",
+        "a": "See CONTRIBUTING.md in both frontend and backend repos and QUICK_START_CONTRIBUTORS.md in backend for environment setup and expectations."
+      }
+    ]
+  },
+  "project": {
+    "overview": "Project-specific features, structure, and usage of Travel-Book.",
+    "features": [
+      "Create, edit, delete travel stories with images",
+      "Cloudinary image uploads and optimized storage",
+      "Search and filter stories by location, date, keywords",
+      "Public profile with privacy controls",
+      "Social and email authentication (Google, GitHub, Twitter, OTP)",
+      "Favorites and responsive UI"
+    ],
+    "structure": {
+      "backend": [
+        "index.js: Express app entry",
+        "services/: Service layer including chatbot.service.js",
+        "models/: Mongoose models",
+        "utilities.js: helpers and common utilities",
+        "firebase-admin.js: Admin SDK setup",
+        "webhook/: webhook handlers"
+      ]
+    },
+    "usage": [
+      "Backend dev: set environment variables as per .env.example and run 'npm install' then 'npm run dev' or 'node index.js'",
+      "API base URLs: Development http://localhost:5000, Production https://api.travelbook.sahilfolio.live/",
+      "Frontend dev: Vite at http://localhost:5173"
+    ]
+  },
+  "developer": {
+    "overview": "Common developer and platform-related questions for setup and troubleshooting.",
+    "faqs": [
+      {
+        "q": "Which Node.js version should I use?",
+        "a": "Use an active LTS (e.g., Node 18+). Check package.json engines if specified and align with deployment environment."
+      },
+      {
+        "q": "What environment variables are required?",
+        "a": "See .env.example. Typical keys include GEMINI_API_KEY, MongoDB URI, Firebase credentials, JWT secrets, Cloudinary keys."
+      },
+      {
+        "q": "How do I run tests or verify changes?",
+        "a": "Run the backend locally, exercise affected endpoints (e.g., /chatbot). Add unit/integration tests where applicable or provide manual test plan in the PR."
+      },
+      {
+        "q": "Where can I find docs?",
+        "a": "See README.md, CONTRIBUTING.md, QUICK_START_CONTRIBUTORS.md, and repository-specific documentation."
+      }
+    ]
+  },
+  "guidelines": {
+    "supported_queries": [
+      "Open source contribution workflow and PR steps",
+      "Project features, structure, and usage",
+      "Developer setup, environment, and troubleshooting"
+    ],
+    "update_instructions": "To update chatbot answers, edit this JSON file by adding or revising entries. Keep questions concise and answers actionable. Avoid secrets or personal data."
+  }
+}
