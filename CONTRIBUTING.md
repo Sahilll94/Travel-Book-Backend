@@ -68,9 +68,12 @@ CLOUDINARY_NAME=your_cloudinary_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 
-# Email Service (Nodemailer)
-EMAIL_SERVICE_USER=your_email@gmail.com
-EMAIL_SERVICE_PASSWORD=your_app_password
+# Email Service (Hostinger SMTP)
+EMAIL_USER=your_email@yourdomain.com
+EMAIL_PASSWORD=your_hostinger_app_password
+SMTP_HOST=smtp.hostinger.com
+SMTP_PORT=465
+SMTP_SECURE=true
 
 # Google Generative AI (Chatbot)
 GOOGLE_GENERATIVE_AI_KEY=your_generative_ai_key

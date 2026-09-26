@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
+const emailTransporter = require("./email-transporter");
 // Import the login notification function
 const { sendLoginNotification } = require('./sendLoginNotification');
 
@@ -35,15 +35,6 @@ function generateOTP() {
 // Send OTP via email
 async function sendOTP(email, otp) {
     try {
-        // Create a transporter using SMTP
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASSWORD
-            }
-        });
-
         // Email content
         const mailOptions = {
             from: process.env.EMAIL_USER,
@@ -68,7 +59,7 @@ async function sendOTP(email, otp) {
         };
 
         // Send email
-        await transporter.sendMail(mailOptions);
+        await emailTransporter.sendMail(mailOptions);
         return true;
     } catch (error) {
         console.error('Error sending OTP email:', error);        return false;
@@ -100,15 +91,6 @@ async function sendPasswordResetConfirmation(email, deviceInfo = {}) {
             minute: '2-digit', 
             hour12: true,
             timeZone: 'Asia/Kolkata' // Set to IST
-        });
-
-        // Create a transporter using SMTP
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASSWORD,
-            }
         });
 
         // Email content
@@ -145,7 +127,7 @@ async function sendPasswordResetConfirmation(email, deviceInfo = {}) {
         };
 
         // Send email
-        await transporter.sendMail(mailOptions);
+        await emailTransporter.sendMail(mailOptions);
         console.log(`Password reset confirmation sent successfully to ${email}`);
         return true;
     } catch (error) {

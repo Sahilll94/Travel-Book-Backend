@@ -9,8 +9,8 @@ const bcrypt = require("bcrypt");
 const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-// Importing the nodemailer module
-const nodemailer = require("nodemailer");
+// Shared Hostinger SMTP transporter
+const emailTransporter = require("./email-transporter");
 const crypto = require("crypto");
 
 // Import Firebase Admin
@@ -1678,15 +1678,6 @@ app.post("/forgot-password", async (req, res) => {
 
         // Send email with reset link
         try {
-            // Create a transporter
-            const transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: process.env.EMAIL_USER,
-                    pass: process.env.EMAIL_PASSWORD
-                }
-            });
-
             // Email content
             const mailOptions = {
                 from: `"Travel Book Security" <${process.env.EMAIL_USER}>`,
@@ -1714,7 +1705,7 @@ app.post("/forgot-password", async (req, res) => {
             };
 
             // Send email
-            await transporter.sendMail(mailOptions);
+            await emailTransporter.sendMail(mailOptions);
 
             return res.status(200).json({
                 error: false,
@@ -2877,14 +2868,6 @@ app.post("/contributors/submit", async (req, res) => {
         
         // Send notification email to admin
         try {
-            const transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: process.env.EMAIL_USER,
-                    pass: process.env.EMAIL_PASSWORD
-                }
-            });
-            
             const adminEmail = 'sahilk64555@gmail.com';
             const adminMailOptions = {
                 from: `"Travel Book Contributors" <${process.env.EMAIL_USER}>`,
@@ -2941,7 +2924,7 @@ app.post("/contributors/submit", async (req, res) => {
                 `
             };
             
-            await transporter.sendMail(adminMailOptions);
+            await emailTransporter.sendMail(adminMailOptions);
             console.log('Admin notification email sent successfully');
         } catch (emailError) {
             console.error('Failed to send admin notification email:', emailError);
@@ -3005,14 +2988,6 @@ app.put("/contributors/:id/status", authenticateToken, async (req, res) => {
         
         // Send email notification to contributor
         try {
-            const transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: process.env.EMAIL_USER,
-                    pass: process.env.EMAIL_PASSWORD
-                }
-            });
-            
             const statusText = status === 'approved' ? 'Approved' : 'Not Approved';
             const statusColor = status === 'approved' ? '#28a745' : '#dc3545';
             
@@ -3041,7 +3016,7 @@ app.put("/contributors/:id/status", authenticateToken, async (req, res) => {
                 `
             };
             
-            await transporter.sendMail(contributorMailOptions);
+            await emailTransporter.sendMail(contributorMailOptions);
             console.log('Contributor notification email sent successfully');
         } catch (emailError) {
             console.error('Failed to send contributor notification email:', emailError);

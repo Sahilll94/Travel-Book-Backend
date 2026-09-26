@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+const emailTransporter = require('./email-transporter');
 
 // Send login notification email with authentication method
 async function sendLoginNotification(email, ip, device, authMethod = 'password') {
@@ -49,15 +49,6 @@ async function sendLoginNotification(email, ip, device, authMethod = 'password')
                 authColor = '#3498db';
         }
 
-        // Create a transporter using SMTP
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASSWORD,
-            }
-        });
-
         // Email content
         const mailOptions = {
             from: `"Travel Book Security" <${process.env.EMAIL_USER}>`,
@@ -95,7 +86,7 @@ async function sendLoginNotification(email, ip, device, authMethod = 'password')
         };
 
         // Send email
-        await transporter.sendMail(mailOptions);
+        await emailTransporter.sendMail(mailOptions);
         return true;
     } catch (error) {
         console.error('Error sending login notification email:', error);        return false;

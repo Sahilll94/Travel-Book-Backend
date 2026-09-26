@@ -48,7 +48,11 @@ rm -rf node_modules     # Remove node_modules (if needed)
 | `JWT_SECRET` | Token signing | Any random string |
 | `FIREBASE_PROJECT_ID` | Firebase auth | Project ID |
 | `CLOUDINARY_NAME` | Image storage | Your account |
-| `EMAIL_SERVICE_USER` | Email sender | your@gmail.com |
+| `EMAIL_USER` | Email sender | your_email@yourdomain.com |
+| `EMAIL_PASSWORD` | Hostinger app password | Your app password |
+| `SMTP_HOST` | SMTP server | `smtp.hostinger.com` |
+| `SMTP_PORT` | SMTP port | `465` |
+| `SMTP_SECURE` | TLS mode | `true` |
 | `GOOGLE_GENERATIVE_AI_KEY` | Chatbot AI | API key |
 | `PORT` | Server port | 5000 |
 
