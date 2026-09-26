@@ -45,15 +45,19 @@ rm -rf node_modules     # Remove node_modules (if needed)
 | Variable | Purpose | Example |
 |----------|---------|---------|
 | `MONGODB_URI` | Database connection | `mongodb+srv://...` |
-| `JWT_SECRET` | Token signing | Any random string |
+| `ACCESS_TOKEN_SECRET` | Token signing | Any random string |
 | `FIREBASE_PROJECT_ID` | Firebase auth | Project ID |
-| `CLOUDINARY_NAME` | Image storage | Your account |
+| `FIREBASE_CLIENT_EMAIL` | Firebase auth | Service account email |
+| `FIREBASE_PRIVATE_KEY` | Firebase auth | Service account private key |
+| `CLOUDINARY_CLOUD_NAME` | Image storage | Your account |
+| `CLOUDINARY_API_KEY` | Image storage | API key |
+| `CLOUDINARY_API_SECRET` | Image storage | API secret |
 | `EMAIL_USER` | Email sender | your_email@yourdomain.com |
 | `EMAIL_PASSWORD` | Hostinger app password | Your app password |
 | `SMTP_HOST` | SMTP server | `smtp.hostinger.com` |
 | `SMTP_PORT` | SMTP port | `465` |
 | `SMTP_SECURE` | TLS mode | `true` |
-| `GOOGLE_GENERATIVE_AI_KEY` | Chatbot AI | API key |
+| `GEMINI_API_KEY` | Chatbot AI | API key |
 | `PORT` | Server port | 5000 |
 
 ## File Structure Quick Guide

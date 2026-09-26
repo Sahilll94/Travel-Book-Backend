@@ -56,15 +56,15 @@ Edit `.env` with your configuration:
 MONGODB_URI=mongodb://localhost:27017/travel-book
 # or use MongoDB Atlas: mongodb+srv://username:password@cluster.mongodb.net/travel-book
 
-JWT_SECRET=your_jwt_secret_key_here
+ACCESS_TOKEN_SECRET=your_jwt_secret_key_here
 
 # Firebase Admin Credentials
 FIREBASE_PROJECT_ID=your_project_id
-FIREBASE_PRIVATE_KEY=your_private_key
 FIREBASE_CLIENT_EMAIL=your_email@firebase.gserviceaccount.com
+FIREBASE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY\n-----END PRIVATE KEY-----\n
 
 # Cloudinary (Image Storage)
-CLOUDINARY_NAME=your_cloudinary_name
+CLOUDINARY_CLOUD_NAME=your_cloudinary_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 
@@ -76,7 +76,7 @@ SMTP_PORT=465
 SMTP_SECURE=true
 
 # Google Generative AI (Chatbot)
-GOOGLE_GENERATIVE_AI_KEY=your_generative_ai_key
+GEMINI_API_KEY=your_generative_ai_key
 
 PORT=5000
 NODE_ENV=development

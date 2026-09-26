@@ -1,9 +1,7 @@
-require("dotenv").config(); //It will point on config.json file and fetch the data;
+require("dotenv").config();
 
 
 const cloudinary = require('cloudinary').v2;
-// const config = require('./config.json');
-const config = require("./config.json");
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt");
 const express = require("express");
@@ -60,9 +58,9 @@ const app = express();
 app.set('trust proxy', true);
 
 cloudinary.config({
-    cloud_name: config.cloudinary.cloud_name,
-    api_key: config.cloudinary.api_key,
-    api_secret: config.cloudinary.api_secret,
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 // Parse CORS origins from .env
@@ -95,7 +93,7 @@ const path = require("path");
 const { Readable } = require("stream");
 const { error } = require("console");
 
-mongoose.connect(config.connectionString)
+mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log("Connected to MongoDB successfully"))
     .catch(err => console.error("MongoDB connection error:", err));
 
